@@ -8,19 +8,19 @@ import os
 import textwrap
 
 from spack.package import *
-from spack.pkg.builtin.boost import Boost
+from spack_repo.builtin.packages.boost.package import Boost
 
 
 class Xios(Package):
     """XIOS package. XML-IO-SERVER library for IO management of climate models."""
 
+    git = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git"
+
     # LFRic 3.0 requires the following:
     # https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git
     # equivalent sha to legacy svn revision 2701
-    version("2701", git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
-           commit="2eb572f0986eca19031eb6c294d116646010687c")
-    version("3.0.1.0", git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
-            commit="xios-3.0.1.0")
+    version("2701", commit="2eb572f0986eca19031eb6c294d116646010687c")
+    version("3.0.1.0", commit="xios-3.0.1.0")
 
     variant("oasis", default=False, description="enable OASIS support")
     variant(
@@ -33,6 +33,10 @@ class Xios(Package):
     depends_on("netcdf-fortran", type="run")
     depends_on("hdf5+mpi", type="run")
     depends_on("mpi")
+
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", type="build")
 
     # TODO: replace this with an explicit list of components of Boost,
     # for instance depends_on('boost +filesystem')
