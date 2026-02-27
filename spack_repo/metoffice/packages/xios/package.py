@@ -48,7 +48,6 @@ class Xios(Package):
     depends_on("gmake", type="build")
 
     depends_on("boost")
-    depends_on("subversion", type="build")
     depends_on("oasis", type="build", when="+oasis")
 
     def xios_fcm(self):
@@ -83,10 +82,10 @@ class Xios(Package):
         else:
             param["FFLAGS"] = ""
 
-        # Note: removed "%intel", "%apple-clang", "%clang", "%fj" from
+        # Note: removed "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
-        if (any(map(spec.satisfies, ("%gcc", "%cce"))) and
+        if (any(map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))) and
             self.spec.satisfies("@=2701")):
             text = textwrap.dedent("""
             %CCOMPILER      {MPICXX}
@@ -94,7 +93,7 @@ class Xios(Package):
             %LINKER         {MPIFC}
 
             %BASE_CFLAGS    -ansi -w -D_GLIBCXX_USE_CXX11_ABI=0 \
-            -I{BOOST_INC_DIR} -std=c++11
+            -I{BOOST_INC_DIR} -I{BLITZ_INC_DIR} -std=c++11
             %PROD_CFLAGS    -O3 -DBOOST_DISABLE_ASSERTS
             %DEV_CFLAGS     -g -O2
             %DEBUG_CFLAGS   -g
@@ -105,7 +104,7 @@ class Xios(Package):
             %DEBUG_FFLAGS   -g
 
             %BASE_INC       -D__NONE__
-            %BASE_LD        -L{BOOST_LIB_DIR} {LIBCXX}
+            %BASE_LD        -L{BOOST_LIB_DIR} -L{BLITZ_LIB_DIR} -lblitz {LIBCXX}
 
             %CPP            {CC} -E
             %FPP            {CC} -E -P -x c
@@ -180,6 +179,8 @@ class Xios(Package):
             "SPACK",
             "--netcdf_lib",
             "netcdf4_par",
+            "--use_extern_boost",
+            "--use_extern_blitz",
             "--job",
             str(make_jobs),
         ]
