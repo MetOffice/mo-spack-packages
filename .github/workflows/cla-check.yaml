@@ -1,0 +1,14 @@
+# -----------------------------------------------------------------------------
+# (C) Crown copyright Met Office. All rights reserved.
+# The file LICENCE, distributed with this code, contains details of the terms
+# under which the code may be used.
+# -----------------------------------------------------------------------------
+# Check that contributors have signed the Momentum Contributor License Agreement (CLA).
+name: Legal
+
+on:
+  pull_request_target:
+
+jobs:
+  cla:
+    uses: MetOffice/growss/.github/workflows/cla-check.yaml@main
