@@ -4,7 +4,8 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 
-from spack.package import AutotoolsPackage
+from spack.package import *
+from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
 
 
 class Yaxt(AutotoolsPackage):
@@ -29,6 +30,9 @@ class Yaxt(AutotoolsPackage):
     version("0.9.2", sha256="6c8bc440a63b0ee87947add65423d8b4c93ba453383f1e12c82befd0f8d461f5")
     version("0.9.1", sha256="10414d55a1e5572a5036d19830c499de5f6dfe9be4eb097b0009e27b81d6211b")
     version("0.9.0", sha256="8a403294ecc7a3d32e8b4f168f548b443f21dac7d846f7fe3b6242ca663fafb3")    
+
+    depends_on("c", type="build")
+    depends_on("fortran", type="build")
 
     depends_on("mpi")
     depends_on("autoconf", type="build", when=" build_system=autotools")
