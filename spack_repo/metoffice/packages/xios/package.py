@@ -34,6 +34,7 @@ class Xios(Package):
     depends_on("netcdf-fortran", type="run")
     depends_on("hdf5+mpi", type="run")
     depends_on("mpi")
+    depends_on("curl")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
