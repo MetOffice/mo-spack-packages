@@ -4,3 +4,4 @@
 | ----------- | --------------- | ----------- | ---------- |
 | yaswant     | Yaswant Pradhan | Met Office  | 2026-03-03 |
 | ScottWales  | Scott Wales     | Bureau of Meteorology | 2026-03-05 |
+| t00sa       | Sam Clarke-Green | Met Office | 2026-03-11 |
