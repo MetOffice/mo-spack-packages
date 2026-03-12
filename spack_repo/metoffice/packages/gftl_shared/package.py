@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+#  (C) Crown copyright Met Office. All rights reserved.
+#  The file LICENCE, distributed with this code, contains details of the terms
+#  under which the code may be used.
+# -----------------------------------------------------------------------------
+
 import os
 
 import spack_repo.builtin.packages.gftl_shared.package as gftlShared

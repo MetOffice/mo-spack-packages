@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+#  (C) Crown copyright Met Office. All rights reserved.
+#  The file LICENCE, distributed with this code, contains details of the terms
+#  under which the code may be used.
+# -----------------------------------------------------------------------------
+
 from spack_repo.builtin.packages.fargparse.package import Fargparse as BaseFargparse
 from spack.package import *
 import os

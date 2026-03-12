@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+#  (C) Crown copyright Met Office. All rights reserved.
+#  The file LICENCE, distributed with this code, contains details of the terms
+#  under which the code may be used.
+# -----------------------------------------------------------------------------
+
 from spack_repo.builtin.packages.mpich.package import Mpich as BaseMpich
 from spack.package import *
 

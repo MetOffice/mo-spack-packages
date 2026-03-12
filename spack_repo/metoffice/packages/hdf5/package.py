@@ -1,3 +1,9 @@
+# -----------------------------------------------------------------------------
+#  (C) Crown copyright Met Office. All rights reserved.
+#  The file LICENCE, distributed with this code, contains details of the terms
+#  under which the code may be used.
+# -----------------------------------------------------------------------------
+
 from spack_repo.builtin.packages.hdf5.package import Hdf5 as BaseHdf5
 from spack.package import *
 
