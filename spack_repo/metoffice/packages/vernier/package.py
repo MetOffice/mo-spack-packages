@@ -3,7 +3,6 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-import os
 from spack_repo.builtin.build_systems.cmake import CMakePackage
 from spack.package import *
 
@@ -18,10 +17,10 @@ class Vernier(CMakePackage):
     # best solution is to manually download the tar file from github
     # to a local directory, cd to the directory, and add it to a
     # mirror with `spack mirror create -d <directory> -D vernier`
-    git = "git@github.com:MetOffice/Vernier.git"
+    git = "https://github.com/MetOffice/Vernier.git"
     url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.3.0.tar.gz"
     # Head of trunk
-    version("develop")
+    version("main", branch="main")
 
     version(
         "0.4.0",
@@ -54,6 +53,9 @@ class Vernier(CMakePackage):
     depends_on("c", type="build")
     depends_on("cxx", type="build")
     depends_on("fortran", type="build")
+
+    # See Vernier issue 212
+    conflicts("^openmpi", when="@:0.4")
 
     def cmake_args(self):
         args = [
