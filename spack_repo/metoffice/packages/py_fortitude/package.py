@@ -40,4 +40,6 @@ class PyFortitude(PythonPackage):
     )
 
     depends_on("py-maturin@1.0:2.0", type=("build"))
+    depends_on("rust@1.87:", when="@0.8.0:", type=("build"))
+    depends_on("rust@1.80:", when="@:0.7.5", type=("build"))
     depends_on("python@3.10:")
