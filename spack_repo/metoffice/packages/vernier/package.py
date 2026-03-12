@@ -1,7 +1,8 @@
-# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
-# Spack Project Developers. See the top-level COPYRIGHT file for details.
-#
-# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+# -----------------------------------------------------------------------------
+#  (C) Crown copyright Met Office. All rights reserved.
+#  The file LICENCE, distributed with this code, contains details of the terms
+#  under which the code may be used.
+# -----------------------------------------------------------------------------
 
 from spack_repo.builtin.build_systems.cmake import CMakePackage
 from spack.package import *
@@ -12,11 +13,6 @@ class Vernier(CMakePackage):
 
     homepage = "https://github.com/MetOffice/Vernier"
 
-    # At present, Vernier cannot currently be downloaded without a
-    # user account that is part of the MetOffice organisation.  The
-    # best solution is to manually download the tar file from github
-    # to a local directory, cd to the directory, and add it to a
-    # mirror with `spack mirror create -d <directory> -D vernier`
     git = "https://github.com/MetOffice/Vernier.git"
     url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.3.0.tar.gz"
     # Head of trunk
@@ -36,7 +32,7 @@ class Vernier(CMakePackage):
         sha256="c549fd8ad09d2150e286e1ea25499bda5ecc19467020e505c2ec57c1141afc92",
     )
 
-    variant("gtest", default=False, description="enable testing")
+    variant("test", default=False, description="enable testing")
     variant(
         "max_label_length",
         default="256",
@@ -46,8 +42,8 @@ class Vernier(CMakePackage):
     )
 
     depends_on("cmake@3.13:")
-    depends_on("googletest", when="+gtest")
-    depends_on("pfunit", when="+gtest")
+    depends_on("googletest@1.11.0:", when="+test")
+    depends_on("pfunit+mpi", when="+test")
     depends_on("mpi")
 
     depends_on("c", type="build")
@@ -63,8 +59,10 @@ class Vernier(CMakePackage):
             self.define("ENABLE_SPHINX", False),
             self.define("INCLUDE_GTEST", False),
             self.define_from_variant("STRING_LENGTH", "max_label_length"),
-            self.define_from_variant("BUILD_TESTS", "gtest"),
+            self.define_from_variant("BUILD_TESTS", "test"),
+            self.define_from_variant("BUILD_FORTRAN_TESTS", "test"),
         ]
+
         return args
 
     def setup_run_environment(self, env):
