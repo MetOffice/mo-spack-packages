@@ -1,0 +1,167 @@
+From 1d094eca7815f1967fac1669f6e22eb6106fe311 Mon Sep 17 00:00:00 2001
+From: Matthew Hambley <matthew.hambley@metoffice.gov.uk>
+Date: Tue, 3 Jun 2025 11:54:20 +0100
+Subject: [PATCH 1/1] Make stops explicit about their return code.
+
+---
+ src/funit/FUnit.F90                  |  8 ++++++--
+ src/funit/core/RemoteRunner.F90      |  7 ++++++-
+ src/funit/core/RobustRunner.F90      |  7 ++++++-
+ src/pfunit/core/pFUnit.F90           | 10 ++++++++--
+ src/pfunit/pFUnit.F90                |  8 +++++++-
+ tests/funit-core/robustTestSuite.F90 |  2 +-
+ 6 files changed, 34 insertions(+), 8 deletions(-)
+
+diff --git a/src/funit/FUnit.F90 b/src/funit/FUnit.F90
+index 7df7b65..9c25c68 100644
+--- a/src/funit/FUnit.F90
++++ b/src/funit/FUnit.F90
+@@ -168,7 +168,11 @@ contains
+ #if defined(PGI)
+          call exit(-1)
+ #else
+-         stop '*** Encountered 1 or more failures/errors during testing. ***'
++         write( &
++            output_unit, &
++            '("*** Encountered 1 or more failures/errors during testing ***")' &
++         )
++         stop 2
+ #endif
+       end if
+ 
+@@ -180,7 +184,7 @@ contains
+ 
+       if (use_mpi) then
+          print*,'Cannot use MPI - need to link with pFUnit not FUnit.'
+-         stop
++         stop 1
+       end if
+       context = SerialContext()
+    end function get_context
+diff --git a/src/funit/core/RemoteRunner.F90 b/src/funit/core/RemoteRunner.F90
+index fd8141e..2ed9a6b 100644
+--- a/src/funit/core/RemoteRunner.F90
++++ b/src/funit/core/RemoteRunner.F90
+@@ -38,6 +38,9 @@
+ ! -----------------------------------------------------------------------
+ 
+ module PF_RemoteRunner
++
++   use, intrinsic :: iso_fortran_env, only : error_unit
++
+    use PF_Test
+    use PF_BaseTestRunner
+    use, intrinsic :: iso_c_binding, only: C_NULL_CHAR
+@@ -111,7 +114,9 @@ contains
+       class is (TestCase)
+          call testCaseList%push_back(aTest)
+       class default
+-         stop
++         write( error_unit, &
++                '("Unexpected child passsed to RemotetRunner%run")' )
++         stop 1
+       end select
+ 
+       result = TestResult()
+diff --git a/src/funit/core/RobustRunner.F90 b/src/funit/core/RobustRunner.F90
+index 32293c2..96cc0b2 100644
+--- a/src/funit/core/RobustRunner.F90
++++ b/src/funit/core/RobustRunner.F90
+@@ -23,6 +23,9 @@
+ !
+ !-------------------------------------------------------------------------------
+ module PF_RobustRunner
++
++   use, intrinsic :: iso_fortran_env, only : error_unit
++
+    use PF_Test
+    use PF_TestCase
+    use PF_BaseTestRunner
+@@ -164,7 +167,9 @@ contains
+       class is (TestCase)
+          call testCases%push_back(aTest)
+       class default
+-         stop
++         write( error_unit, &
++                '("Unexpected child passed to RobustRunner%runWithResult")' )
++         stop 1
+       end select
+ 
+       needs_launch = .true.
+diff --git a/src/pfunit/core/pFUnit.F90 b/src/pfunit/core/pFUnit.F90
+index ae7e891..e475bb8 100644
+--- a/src/pfunit/core/pFUnit.F90
++++ b/src/pfunit/core/pFUnit.F90
+@@ -63,6 +63,9 @@ end module pFUnit_private
+ !
+ !-------------------------------------------------------------------------------
+ module pFUnit
++
++   ise intrinsic :: iso_fortran_env, only : error_unit
++
+    use FUnit_private
+    use pFUnit_private
+    use PF_MPI_MODULE
+@@ -82,7 +85,10 @@ contains
+       integer :: error
+ 
+       call mpi_init(error)
+-      if (error /= MPI_SUCCESS) stop
++      if (error /= MPI_SUCCESS) then
++         write( error_unit, '("MPI failed to initialise.")' )
++         stop 1
++      end if
+ 
+       call funit_initialize(extra_initialize)
+ 
+@@ -135,7 +141,7 @@ contains
+          print*,'THIS NEEDS FIXING - must call extra_finalize() on all ranks.'
+          call funit_finalize(extra_finalize, allSuccessful)
+       else
+-         stop
++         stop 0
+       end if
+ 
+    end subroutine finalize
+diff --git a/src/pfunit/pFUnit.F90 b/src/pfunit/pFUnit.F90
+index f319c6e..dabc6d4 100644
+--- a/src/pfunit/pFUnit.F90
++++ b/src/pfunit/pFUnit.F90
+@@ -63,6 +63,9 @@ end module pFUnit_private
+ !
+ !-------------------------------------------------------------------------------
+ module pFUnit
++
++   use, intrinsic :: iso_fortran_env, only : error_unit
++
+    ! Rename overlapping entities to avoid name conflicts
+    ! Cannot use ONLY, because the list will change over time.
+    use FUnit, funit_initialize => initialize
+@@ -88,7 +91,10 @@ contains
+       integer :: error
+ 
+       call mpi_init(error)
+-      if (error /= MPI_SUCCESS) stop
++      if (error /= MPI_SUCCESS) then
++         write( error_unit, '("MPI failed to initialise")' )
++         stop 1
++      end if
+ 
+       call funit_initialize(extra_initialize)
+ 
+diff --git a/tests/funit-core/robustTestSuite.F90 b/tests/funit-core/robustTestSuite.F90
+index 3d1d206..4cda696 100644
+--- a/tests/funit-core/robustTestSuite.F90
++++ b/tests/funit-core/robustTestSuite.F90
+@@ -78,7 +78,7 @@ contains
+    ! This will stop the framework cold.  The robust runner
+    ! should detect this - reporting it as an Error.
+    subroutine runStops()
+-      stop
++      stop 0
+    end subroutine runStops
+ 
+    ! This test will hang.  The robust runner
+-- 
+2.47.1
+
