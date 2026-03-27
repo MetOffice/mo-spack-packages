@@ -19,6 +19,11 @@ class Vernier(CMakePackage):
     version("main", branch="main")
 
     version(
+        "0.4.1",
+        sha256="7a677453a06e2c93aa9cb12af4b1a41de5434f98730f28259ad18bc571958276",
+    )
+
+    version(
         "0.4.0",
         sha256="12bfa7f759517dc566e88287490a423029937f4efdc18bc7a809d8edd37e8464",
     )
