@@ -8,7 +8,23 @@
 import os
 import textwrap
 
-from spack.package import *
+from spack.package import (
+    Executable,
+    InstallError,
+    Package,
+    depends_on,
+    env,
+    filter_file,
+    install_tree,
+    join_path,
+    make_jobs,
+    mkdirp,
+    run_after,
+    touch,
+    variant,
+    version,
+)
+
 from spack_repo.builtin.packages.boost.package import Boost
 
 
@@ -53,7 +69,6 @@ class Xios(Package):
     depends_on("oasis", type="build", when="+oasis")
 
     def xios_fcm(self):
-
         """Create an fcm configuration for the current system.
 
         Override the method in the base package to create a modified
@@ -87,8 +102,9 @@ class Xios(Package):
         # Note: removed "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
-        if (any(map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))) and
-            self.spec.satisfies("@=2701")):
+        if any(
+            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+        ) and self.spec.satisfies("@=2701"):
             text = textwrap.dedent("""
             %CCOMPILER      {MPICXX}
             %FCOMPILER      {MPIFC}
@@ -304,9 +320,12 @@ class Xios(Package):
             os.unlink(target)
 
     def setup_run_environment(self, env):
-
         """Setup custom variables in the generated module file"""
 
         env.prepend_path("FFLAGS", "-I" + self.spec.prefix.include, " ")
         env.prepend_path("CPPFLAGS", "-I" + self.spec.prefix.include, " ")
-        env.prepend_path("LDFLAGS", "-L" + self.spec.prefix.lib + " -Wl,-rpath=" + self.spec.prefix.lib, " ")
+        env.prepend_path(
+            "LDFLAGS",
+            "-L" + self.spec.prefix.lib + " -Wl,-rpath=" + self.spec.prefix.lib,
+            " ",
+        )
