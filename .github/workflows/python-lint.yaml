@@ -1,5 +1,17 @@
+---
 name: Python Lint
-on: push
+
+on:
+    push:
+        branches:
+            - main
+            - v*.*
+
+    pull_request:
+        branches:
+            - main
+            - v*.*
+
 jobs:
     build:
         runs-on: ubuntu-latest
