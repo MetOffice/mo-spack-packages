@@ -8,7 +8,22 @@
 import os
 import textwrap
 
-from spack.package import *
+from spack.package import (
+    Executable,
+    InstallError,
+    Package,
+    depends_on,
+    env,
+    filter_file,
+    install_tree,
+    join_path,
+    make_jobs,
+    mkdirp,
+    run_after,
+    touch,
+    variant,
+    version,
+)
 from spack_repo.builtin.packages.boost.package import Boost
 
 
@@ -326,3 +341,4 @@ class Xios(Package):
             "-L" + self.spec.prefix.lib + " -Wl,-rpath=" + self.spec.prefix.lib,
             " ",
         )
+        env.set("XIOS_VERSION", str(self.spec.version))
