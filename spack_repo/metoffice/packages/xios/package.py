@@ -17,7 +17,6 @@ from spack.package import (
     filter_file,
     install_tree,
     join_path,
-    make_jobs,
     mkdirp,
     run_after,
     touch,
@@ -69,7 +68,6 @@ class Xios(Package):
     depends_on("gmake", type="build")
 
     depends_on("boost")
-    depends_on("subversion", type="build")
     depends_on("oasis", type="build", when="+oasis")
 
     depends_on("c", type="build")
@@ -110,7 +108,9 @@ class Xios(Package):
         # Note: removed "%intel", "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
-        if any(map(spec.satisfies, ("%gcc", "%cce"))) and self.spec.satisfies("@=2701"):
+        if any(
+            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+        ) and self.spec.satisfies("@=2701"):
             text = textwrap.dedent(
                 """
             %CCOMPILER      {MPICXX}
@@ -129,7 +129,7 @@ class Xios(Package):
             %DEBUG_FFLAGS   -g
 
             %BASE_INC       -D__NONE__
-            %BASE_LD        -L{BOOST_LIB_DIR} {LIBCXX}
+            %BASE_LD        -L{BOOST_LIB_DIR} -L{BLITZ_LIB_DIR} -lblitz {LIBCXX}
 
             %CPP            {CC} -E
             %FPP            {CC} -E -P -x c
@@ -210,7 +210,7 @@ class Xios(Package):
             "--netcdf_lib",
             "netcdf4_par",
             "--job",
-            str(make_jobs),
+            str(make_jobs),  # noqa: F821
         ]
 
         if "+oasis" in self.spec:
