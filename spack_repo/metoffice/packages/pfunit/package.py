@@ -5,12 +5,11 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.packages.pfunit.package import Pfunit as BasePfunit
-from spack.package import *
+from spack.package import patch
 import os
 
 
 class Pfunit(BasePfunit):
-
     patch("Make-stops-explicit-about-their-return-code.patch", when="@4.10.0:4.12.0")
 
     def setup_run_environment(self, env):

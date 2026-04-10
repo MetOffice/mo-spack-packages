@@ -5,11 +5,9 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.packages.hdf5.package import Hdf5 as BaseHdf5
-from spack.package import *
 
 
 class Hdf5(BaseHdf5):
-
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""
 

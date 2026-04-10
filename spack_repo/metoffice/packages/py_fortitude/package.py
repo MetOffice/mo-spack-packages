@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.build_systems.python import PythonPackage
-from spack.package import *
+from spack.package import depends_on, license, version
 
 
 class PyFortitude(PythonPackage):
@@ -16,7 +16,8 @@ class PyFortitude(PythonPackage):
     license("MIT")
 
     version(
-        "0.8.0", sha256="01662917f0b87792fcb5d8c4b1e893849d79d1b92dade7cc836c0e145b651188",
+        "0.8.0",
+        sha256="01662917f0b87792fcb5d8c4b1e893849d79d1b92dade7cc836c0e145b651188",
     )
     version(
         "0.7.5",

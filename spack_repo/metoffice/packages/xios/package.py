@@ -17,7 +17,6 @@ from spack.package import (
     filter_file,
     install_tree,
     join_path,
-    make_jobs,
     mkdirp,
     run_after,
     touch,
@@ -200,7 +199,7 @@ class Xios(Package):
             "--use_extern_boost",
             "--use_extern_blitz",
             "--job",
-            str(make_jobs),
+            str(make_jobs),  # noqa: F821
         ]
 
         if "+oasis" in self.spec:
