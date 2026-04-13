@@ -5,11 +5,9 @@
 # -----------------------------------------------------------------------------
 
 import spack_repo.builtin.packages.netcdf_c.package as netcdfCBase
-from spack.package import *
 
 
 class NetcdfC(netcdfCBase.NetcdfC):
-
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""
 

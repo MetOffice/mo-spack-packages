@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.build_systems.python import PythonPackage
-from spack.package import *
+from spack.package import depends_on, variant, version
 
 
 class PySciFab(PythonPackage):

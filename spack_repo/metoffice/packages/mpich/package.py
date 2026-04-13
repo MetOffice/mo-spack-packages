@@ -5,11 +5,9 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.packages.mpich.package import Mpich as BaseMpich
-from spack.package import *
 
 
 class Mpich(BaseMpich):
-
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""
 

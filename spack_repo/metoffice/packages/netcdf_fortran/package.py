@@ -5,11 +5,9 @@
 # -----------------------------------------------------------------------------
 
 import spack_repo.builtin.packages.netcdf_fortran.package as netcdfFortran
-from spack.package import *
 
 
 class NetcdfFortran(netcdfFortran.NetcdfFortran):
-
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""
 

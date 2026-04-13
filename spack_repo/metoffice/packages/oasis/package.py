@@ -6,8 +6,7 @@
 
 import os
 from spack_repo.builtin.build_systems.makefile import MakefilePackage
-from spack.package import *
-from spack.llnl.util.filesystem import install_tree
+from spack.package import copy_tree, depends_on, variant, version
 
 
 class Oasis(MakefilePackage):
