@@ -25,4 +25,3 @@ class PyPsyclone(PyPsycloneBase):
         "3.2.2",
         sha256="8452fad84a2e61566e8599dc6ff336c4ada73ec03e17900aa5d37afe656d46d5",
     )
-
