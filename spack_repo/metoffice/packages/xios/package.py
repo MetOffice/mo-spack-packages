@@ -8,7 +8,21 @@
 import os
 import textwrap
 
-from spack.package import *
+from spack.package import (
+    Executable,
+    InstallError,
+    Package,
+    depends_on,
+    env,
+    filter_file,
+    install_tree,
+    join_path,
+    mkdirp,
+    run_after,
+    touch,
+    variant,
+    version,
+)
 from spack_repo.builtin.packages.boost.package import Boost
 
 
@@ -20,8 +34,16 @@ class Xios(Package):
     # LFRic 3.0 requires the following:
     # https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git
     # equivalent sha to legacy svn revision 2701
-    version("2701", commit="2eb572f0986eca19031eb6c294d116646010687c")
-    version("3.0.1.0", commit="xios-3.0.1.0")
+    version(
+        "2701",
+        git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
+        commit="2eb572f0986eca19031eb6c294d116646010687c",
+    )
+    version(
+        "3.0.1.0",
+        git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
+        commit="xios-3.0.1.0",
+    )
 
     variant("oasis", default=False, description="enable OASIS support")
     variant(
@@ -36,10 +58,6 @@ class Xios(Package):
     depends_on("mpi")
     depends_on("curl")
 
-    depends_on("c", type="build")
-    depends_on("cxx", type="build")
-    depends_on("fortran", type="build")
-
     # TODO: replace this with an explicit list of components of Boost,
     # for instance depends_on('boost +filesystem')
     # See https://github.com/spack/spack/pull/22303 for reference
@@ -52,8 +70,11 @@ class Xios(Package):
     depends_on("boost")
     depends_on("oasis", type="build", when="+oasis")
 
-    def xios_fcm(self):
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("fortran", type="build")
 
+    def xios_fcm(self):
         """Create an fcm configuration for the current system.
 
         Override the method in the base package to create a modified
@@ -84,18 +105,20 @@ class Xios(Package):
         else:
             param["FFLAGS"] = ""
 
-        # Note: removed "%apple-clang", "%clang", "%fj" from
+        # Note: removed "%intel", "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
-        if (any(map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))) and
-            self.spec.satisfies("@=2701")):
-            text = textwrap.dedent("""
+        if any(
+            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+        ) and self.spec.satisfies("@=2701"):
+            text = textwrap.dedent(
+                """
             %CCOMPILER      {MPICXX}
             %FCOMPILER      {MPIFC}
             %LINKER         {MPIFC}
 
             %BASE_CFLAGS    -ansi -w -D_GLIBCXX_USE_CXX11_ABI=0 \
-            -I{BOOST_INC_DIR} -I{BLITZ_INC_DIR} -std=c++11
+            -I{BOOST_INC_DIR} -std=c++11
             %PROD_CFLAGS    -O3 -DBOOST_DISABLE_ASSERTS
             %DEV_CFLAGS     -g -O2
             %DEBUG_CFLAGS   -g
@@ -111,9 +134,11 @@ class Xios(Package):
             %CPP            {CC} -E
             %FPP            {CC} -E -P -x c
             %MAKE           gmake
-            """).format(**param)
+            """
+            ).format(**param)
         elif spec.satisfies("%gcc"):
-            text = textwrap.dedent("""
+            text = textwrap.dedent(
+                """
             %CCOMPILER      {MPICXX}
             %FCOMPILER      {MPIFC}
             %LINKER         {MPIFC}
@@ -134,9 +159,11 @@ class Xios(Package):
             %CPP            {CC} -E
             %FPP            {CC} -E -P -x c
             %MAKE           gmake
-            """).format(**param)
+            """
+            ).format(**param)
         elif spec.satisfies("%cce"):
-            text = textwrap.dedent("""
+            text = textwrap.dedent(
+                """
             %CCOMPILER      {MPICXX}
             %FCOMPILER      {MPIFC}
             %LINKER         {MPIFC}
@@ -159,7 +186,8 @@ class Xios(Package):
             %MAKE           gmake
 
             bld::tool::fc_modsearch -J
-            """).format(**param)
+            """
+            ).format(**param)
         else:
             raise InstallError("Unsupported compiler.")
 
@@ -181,10 +209,8 @@ class Xios(Package):
             "SPACK",
             "--netcdf_lib",
             "netcdf4_par",
-            "--use_extern_boost",
-            "--use_extern_blitz",
             "--job",
-            str(make_jobs),
+            str(make_jobs),  # noqa: F821
         ]
 
         if "+oasis" in self.spec:
@@ -249,7 +275,8 @@ class Xios(Package):
             "BOOST_INC_DIR": spec["boost"].prefix.include,
             "BOOST_LIB_DIR": spec["boost"].prefix.lib,
         }
-        text = textwrap.dedent("""
+        text = textwrap.dedent(
+            """
         NETCDF_INCDIR="-I{NETCDF_INC_DIR} -I{NETCDFF_INC_DIR}"
         NETCDF_LIBDIR="-L{NETCDF_LIB_DIR} -L{NETCDFF_LIB_DIR}"
         NETCDF_LIB="-lnetcdff -lnetcdf"
@@ -269,7 +296,8 @@ class Xios(Package):
         OASIS_INCDIR=""
         OASIS_LIBDIR=""
         OASIS_LIB=""
-        """)
+        """
+        )
         with open(file, "w") as f:
             f.write(text.format(**paths))
 
@@ -304,9 +332,13 @@ class Xios(Package):
             os.unlink(target)
 
     def setup_run_environment(self, env):
-
         """Setup custom variables in the generated module file"""
 
         env.prepend_path("FFLAGS", "-I" + self.spec.prefix.include, " ")
         env.prepend_path("CPPFLAGS", "-I" + self.spec.prefix.include, " ")
-        env.prepend_path("LDFLAGS", "-L" + self.spec.prefix.lib + " -Wl,-rpath=" + self.spec.prefix.lib, " ")
+        env.prepend_path(
+            "LDFLAGS",
+            "-L" + self.spec.prefix.lib + " -Wl,-rpath=" + self.spec.prefix.lib,
+            " ",
+        )
+        env.set("XIOS_VERSION", str(self.spec.version))

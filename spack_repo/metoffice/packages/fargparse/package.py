@@ -5,12 +5,10 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.packages.fargparse.package import Fargparse as BaseFargparse
-from spack.package import *
 import os
 
 
 class Fargparse(BaseFargparse):
-
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""
         major_version, minor_version, _ = str(self.spec.version).split(".")
