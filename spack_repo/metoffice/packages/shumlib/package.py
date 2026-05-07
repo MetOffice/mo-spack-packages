@@ -22,15 +22,18 @@ class Shumlib(CMakePackage):
     """
 
     homepage = "https://github.com/MetOffice/shumlib"
+    url = "https://github.com/MetOffice/shumlib/archive/refs/tags/2025.10.1.tar.gz"
     git = "https://github.com/MetOffice/shumlib.git"
 
-    # FIXME: placeholder pointing to exiseting makefile version
+    version("main", branch="main")
+
+    # FIXME: placeholder pointing to existing makefile version
     version(
         "2025.10.1",
         sha256="9947c4bc53f6177ec98d751bf296d55e429a7c66fae73178645bed849029bc0f",
     )
 
-    epends_on("cmake@3.13:", type="build")
+    depends_on("cmake@3.13:", type="build")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
@@ -43,7 +46,7 @@ class Shumlib(CMakePackage):
     )
 
     variant("openmp", default=True, description="enable OpenMP support")
-    variant("fthread", default=False, description="enable Fortran OpenMP everywhere")
+    variant("fthreads", default=False, description="enable Fortran OpenMP everywhere")
     variant("test", default=False, description="enable testing")
 
     def cmake_args(self):
