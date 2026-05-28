@@ -3,7 +3,7 @@
 #  The file LICENCE, distributed with this code, contains details of the terms
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
-from spack.package import depends_on, variant
+from spack.package import depends_on, variant, ver, filter_file
 
 import spack_repo.builtin.packages.blitz.package as BaseBlitz
 
