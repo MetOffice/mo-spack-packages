@@ -7,11 +7,6 @@
 from spack_repo.builtin.packages.py_fparser.package import PyFparser as PyFparserBase
 from spack.package import version
 
-from spack_repo.builtin.build_systems.generic import Package
-
-from spack.package import *
-
-
 class PyFparser(PyFparserBase):
     """Extension of the central Spack fparser package"""
     
