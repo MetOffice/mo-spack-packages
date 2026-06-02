@@ -16,6 +16,10 @@ class PyFortitude(PythonPackage):
     license("MIT")
 
     version(
+        "0.9.0", 
+        sha256="7d51706a0a15bdc3ad6521214062c17e921dd1093759d15d785da4a59950d39d"
+    )
+    version(
         "0.8.0",
         sha256="01662917f0b87792fcb5d8c4b1e893849d79d1b92dade7cc836c0e145b651188",
     )
