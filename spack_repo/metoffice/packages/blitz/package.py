@@ -11,7 +11,9 @@ import spack_repo.builtin.packages.blitz.package as BaseBlitz
 class Blitz(BaseBlitz.Blitz):
     """N-dimensional arrays for C++"""
 
-    variant("libpapi", default=False, description="Enable building blitz with PAPI counters")
+    variant(
+        "libpapi", default=False, description="Enable building blitz with PAPI counters"
+    )
 
     depends_on("papi@:5.7", type="link", when="+libpapi")
 
@@ -19,11 +21,10 @@ class Blitz(BaseBlitz.Blitz):
         args = []
         if self.spec.satisfies("~libpapi"):
             args.extend([self.define("BZ_HAVE_LIBPAPI", "")])
-        
+
         return args
 
     def patch(self):
-
         """Fix compiler vendor detection macros.
 
         Compiler vendor detection is broken on the Cray EX.  This adds
@@ -34,5 +35,8 @@ class Blitz(BaseBlitz.Blitz):
         if "%cce" in self.spec and self.compiler.version >= ver(15):
             # Add a default compiler vendor and set it to llvm if
             # using a recent Cray compiler
-            filter_file("^\)", "[COMPILER_VENDOR=\"llvm\"]\n)",
-                        "m4/ac_compiler_specific_header.m4")
+            filter_file(
+                "^\)",
+                '[COMPILER_VENDOR="llvm"]\n)',
+                "m4/ac_compiler_specific_header.m4",
+            )

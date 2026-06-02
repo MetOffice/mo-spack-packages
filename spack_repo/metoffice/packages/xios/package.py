@@ -34,11 +34,15 @@ class Xios(Package):
 
     # XIOS 3
     version("3.0.4.0", tag="xios-3.0.4.0")
-    version("3.0.1.0", sha256="d357e81d9139eb0e7cc15664297851042340ca57a8e84a92b0d0847b8a7c8bfb")
-    
-    # XIOS 2
-    version("2.2701", commit="2eb572f0986eca19031eb6c294d116646010687c") #equivalent sha to legacy svn revision 2701
+    version(
+        "3.0.1.0",
+        sha256="d357e81d9139eb0e7cc15664297851042340ca57a8e84a92b0d0847b8a7c8bfb",
+    )
 
+    # XIOS 2
+    version(
+        "2.2701", commit="2eb572f0986eca19031eb6c294d116646010687c"
+    )  # equivalent sha to legacy svn revision 2701
 
     variant("oasis", default=False, description="enable OASIS support")
     variant(
