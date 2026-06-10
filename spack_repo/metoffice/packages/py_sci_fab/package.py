@@ -22,6 +22,12 @@ class PySciFab(PythonPackage):
     pypi = "sci-fab/sci_fab-0.10.1-py3-none-any.whl"
 
     version(
+        "2.2.0",
+        sha256="0e94538dfdc6bdcf0defabcc4eedaca59ea8b257239052b719c7e948e2bb58c2",
+        expand=False,
+    )
+
+    version(
         "2.0.1",
         sha256="70430c2fb88272129866fa9c39e8e38a80a33abc6e8fa78e024c15360b801f54",
         expand=False,
