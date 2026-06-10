@@ -29,21 +29,20 @@ from spack_repo.builtin.packages.boost.package import Boost
 class Xios(Package):
     """XIOS package. XML-IO-SERVER library for IO management of climate models."""
 
+    url = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios/-/archive/xios-3.0.1.0/xios-xios-3.0.1.0.tar.gz"
     git = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git"
 
-    # LFRic 3.0 requires the following:
-    # https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git
-    # equivalent sha to legacy svn revision 2701
-    version(
-        "2701",
-        git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
-        commit="2eb572f0986eca19031eb6c294d116646010687c",
-    )
+    # XIOS 3
+    version("3.0.4.0", tag="xios-3.0.4.0")
     version(
         "3.0.1.0",
-        git="https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git",
-        commit="xios-3.0.1.0",
+        sha256="d357e81d9139eb0e7cc15664297851042340ca57a8e84a92b0d0847b8a7c8bfb",
     )
+
+    # XIOS 2
+    version(
+        "2.2701", commit="2eb572f0986eca19031eb6c294d116646010687c"
+    )  # equivalent sha to legacy svn revision 2701
 
     variant("oasis", default=False, description="enable OASIS support")
     variant(
@@ -52,9 +51,9 @@ class Xios(Package):
         default="prod",
         description="Build for debugging, development or production",
     )
-    depends_on("netcdf-c+mpi", type="run")
-    depends_on("netcdf-fortran", type="run")
-    depends_on("hdf5+mpi", type="run")
+    depends_on("netcdf-c+mpi", type=("build", "link"))
+    depends_on("netcdf-fortran", type=("build", "link"))
+    depends_on("hdf5+mpi", type=("build", "link"))
     depends_on("mpi")
     depends_on("curl")
 
@@ -68,7 +67,7 @@ class Xios(Package):
     depends_on("gmake", type="build")
 
     depends_on("boost")
-    depends_on("oasis", type="build", when="+oasis")
+    depends_on("oasis", type=("build", "link", "run"), when="+oasis")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
@@ -110,7 +109,7 @@ class Xios(Package):
         # to work with these compilers
         if any(
             map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
-        ) and self.spec.satisfies("@=2701"):
+        ) and self.spec.satisfies("@=2.2701"):
             text = textwrap.dedent(
                 """
             %CCOMPILER      {MPICXX}
