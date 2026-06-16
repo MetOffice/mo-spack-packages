@@ -33,7 +33,7 @@ class Shumlib(CMakePackage):
         sha256="9947c4bc53f6177ec98d751bf296d55e429a7c66fae73178645bed849029bc0f",
     )
 
-    depends_on("cmake@3.13:", type="build")
+    depends_on("cmake@3.26:", type="build")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
