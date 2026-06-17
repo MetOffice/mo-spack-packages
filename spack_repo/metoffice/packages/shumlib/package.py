@@ -22,15 +22,14 @@ class Shumlib(CMakePackage):
     """
 
     homepage = "https://github.com/MetOffice/shumlib"
-    url = "https://github.com/MetOffice/shumlib/archive/refs/tags/2025.10.1.tar.gz"
+    url = "https://github.com/MetOffice/shumlib/archive/refs/tags/2026.07.1.tar.gz"
     git = "https://github.com/MetOffice/shumlib.git"
 
     version("main", branch="main")
 
-    # FIXME: placeholder pointing to existing makefile version
     version(
-        "2025.10.1",
-        sha256="9947c4bc53f6177ec98d751bf296d55e429a7c66fae73178645bed849029bc0f",
+        "2026.07.1",
+        sha256="24f50b580f782cb000e5d86f64ca783a6b8b8e2ef4d7e724f61e7838f0477ddb",
     )
 
     depends_on("cmake@3.26:", type="build")
