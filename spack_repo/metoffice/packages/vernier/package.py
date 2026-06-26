@@ -18,17 +18,19 @@ class Vernier(CMakePackage):
     url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.3.0.tar.gz"
     # Head of trunk
     version("main", branch="main")
-
+    
+    version(
+        "0.5.0",
+        sha256="be1d2fbb16f30162d07fa80c7a2f03b4e85b07dda3898bff125fda3db8718477",
+    )
     version(
         "0.4.1",
         sha256="7a677453a06e2c93aa9cb12af4b1a41de5434f98730f28259ad18bc571958276",
     )
-
     version(
         "0.4.0",
         sha256="12bfa7f759517dc566e88287490a423029937f4efdc18bc7a809d8edd37e8464",
     )
-
     version(
         "0.3.1",
         sha256="76567e028caff5df2e17c0f3cdd2f127794b3d16acf43c64b9d3b762503a6aa2",
