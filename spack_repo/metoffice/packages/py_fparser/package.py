@@ -12,6 +12,11 @@ class PyFparser(PyFparserBase):
     """Extension of the central Spack fparser package"""
 
     version(
+        "0.2.4",
+        sha256="1bdcfd757b739e0435e249a5b2735d672b45c39b3defa6f1065336b69e77ae0f",
+    )
+
+    version(
         "0.2.2",
         sha256="81fee12416cde2dc57782542e4e271a1155e6f7a16eab099c030d54ff1b56b8c",
     )
