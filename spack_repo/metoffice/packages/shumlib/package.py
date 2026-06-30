@@ -28,6 +28,11 @@ class Shumlib(CMakePackage):
     version("main", branch="main")
 
     version(
+        "2026.07.2",
+        sha256="c4c8826ae21ad1371d5737ec8fa614d6a1dc59b880f4e5851f536ca62352d5ed",
+    )
+
+    version(
         "2026.07.1",
         sha256="24f50b580f782cb000e5d86f64ca783a6b8b8e2ef4d7e724f61e7838f0477ddb",
     )
