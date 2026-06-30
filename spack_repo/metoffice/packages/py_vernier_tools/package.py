@@ -12,6 +12,7 @@ class PyVernierTools(PythonPackage):
     """
     Python CLI and library for working with Vernier data
     """
+
     homepage = "https://github.com/MetOffice/Vernier"
     git = "https://github.com/MetOffice/Vernier.git"
     url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.5.0.tar.gz"
