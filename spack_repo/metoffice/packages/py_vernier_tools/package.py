@@ -17,6 +17,11 @@ class PyVernierTools(PythonPackage):
     url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.4.0.tar.gz"
 
     version("develop", branch="main")
+    
+    version(
+        "0.5.0",
+        sha256="be1d2fbb16f30162d07fa80c7a2f03b4e85b07dda3898bff125fda3db8718477",
+    )
 
     depends_on("python@3.9:")
     depends_on("py-setuptools", type="build")
