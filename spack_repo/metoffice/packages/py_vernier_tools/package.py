@@ -14,10 +14,10 @@ class PyVernierTools(PythonPackage):
     """
     homepage = "https://github.com/MetOffice/Vernier"
     git = "https://github.com/MetOffice/Vernier.git"
-    url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.4.0.tar.gz"
+    url = "https://github.com/MetOffice/Vernier/archive/refs/tags/0.5.0.tar.gz"
 
     version("develop", branch="main")
-    
+
     version(
         "0.5.0",
         sha256="be1d2fbb16f30162d07fa80c7a2f03b4e85b07dda3898bff125fda3db8718477",
