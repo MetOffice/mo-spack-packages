@@ -5,7 +5,7 @@
 # -----------------------------------------------------------------------------
 
 from spack_repo.builtin.packages.py_psyclone.package import PyPsyclone as PyPsycloneBase
-from spack.package import version
+from spack.package import version, depends_on
 
 
 class PyPsyclone(PyPsycloneBase):
@@ -18,10 +18,16 @@ class PyPsyclone(PyPsycloneBase):
     """
 
     version(
-        "3.3.0-rc1",
-        sha256="f9e6deece4e874c22235bfac0e80c7b7afedf6864a515f276a69bda5ca1d0e7c",
+        "3.3.0",
+        sha256="9a8c6dc425ef666b9340641fad64e6496302c746a12b23cabd887a1885831c85",
     )
+
     version(
         "3.2.2",
         sha256="8452fad84a2e61566e8599dc6ff336c4ada73ec03e17900aa5d37afe656d46d5",
     )
+
+    depends_on("py-fparser@0.2.4:", type=("build", "run"), when="@3.3.0:")
+
+    # Adjoint fails with sympy >= 1.14
+    depends_on("py-sympy@=1.13.3", type=("build", "run"), when="@=3.3.0")
