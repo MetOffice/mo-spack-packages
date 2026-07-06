@@ -15,8 +15,22 @@ class Yaxt(AutotoolsPackage):
     homepage = "https://swprojects.dkrz.de/redmine/projects/yaxt"
     url = "https://gitlab.dkrz.de/dkrz-sw/yaxt/-/archive/v0.11.3/yaxt-v0.11.3.tar.gz"
 
-    # Yaxt download locations are hard to determine systematically and
-    # must be hardwired for each version
+    version(
+        "0.12.0",
+        sha256="55f940235c6e8548e8fee67c96258e826c92b895c8c05219a5efc25134876b0c",
+    )
+    version(
+        "0.11.5.1",
+        sha256="0bc97acd6cfd8e893318e59daa57e9063cf79644311fc71cdd00597cb89bcc29",
+    )
+    version(
+        "0.11.5",
+        sha256="cf59ce4b20cbf4a7015301d8bf1efcc31d286d72459e0dea18b23af13305d2d7",
+    )
+    version(
+        "0.11.4",
+        sha256="f9a9cbe573d5ee64d0393f467294dbc1f27911e3aa9b6a79decc508920ffdc66",
+    )
     version(
         "0.11.3",
         sha256="32737a1c09156a1491c62fc3ec9e0eb8d1ef958c7e0a7042c7fba3b352d81cd8",
