@@ -18,6 +18,11 @@ class PyPsyclone(PyPsycloneBase):
     """
 
     version(
+        "3.3.1",
+        sha256="9d256cc4ee1494286b1ed8b4b8447b576748008ea5e236159717db1ddc3bd09a",
+    )
+
+    version(
         "3.3.0",
         sha256="9a8c6dc425ef666b9340641fad64e6496302c746a12b23cabd887a1885831c85",
     )
