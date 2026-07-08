@@ -32,7 +32,7 @@ class PyPsyclone(PyPsycloneBase):
         sha256="8452fad84a2e61566e8599dc6ff336c4ada73ec03e17900aa5d37afe656d46d5",
     )
 
-    depends_on("py-fparser@0.2.4:", type=("build", "run"), when="@3.3.0:3.3.1")
+    depends_on("py-fparser@0.2.4:", type=("build", "run"), when="@3.3.0:")
 
     # Adjoint fails with sympy >= 1.14
-    depends_on("py-sympy@=1.13.3", type=("build", "run"), when="@=3.3.0:3.3.1")
+    depends_on("py-sympy@=1.13.3", type=("build", "run"), when="@3.3.0:3.3.1")
