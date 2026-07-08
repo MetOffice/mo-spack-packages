@@ -35,4 +35,4 @@ class PyPsyclone(PyPsycloneBase):
     depends_on("py-fparser@0.2.4:", type=("build", "run"), when="@3.3.0:")
 
     # Adjoint fails with sympy >= 1.14
-    depends_on("py-sympy@=1.13.3", type=("build", "run"), when="@=3.3.0")
+    depends_on("py-sympy@=1.13.3", type=("build", "run"), when="@3.3.0:3.3.1")
