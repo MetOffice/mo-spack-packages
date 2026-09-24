@@ -4,8 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
+from spack.package import depends_on, version
 from spack_repo.builtin.packages.py_psyclone.package import PyPsyclone as PyPsycloneBase
-from spack.package import version, depends_on
 
 
 class PyPsyclone(PyPsycloneBase):

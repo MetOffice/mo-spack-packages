@@ -84,7 +84,7 @@ class Xios(Package):
 
         file = join_path("arch", "arch-SPACK.fcm")
         spec = self.spec
-        param = dict()
+        param = {}
         param["MPICXX"] = spec["mpi"].mpicxx
         param["MPIFC"] = spec["mpi"].mpifc
         param["CC"] = self.compiler.cc

@@ -4,9 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
+from spack.package import depends_on, license, version
 from spack_repo.builtin.build_systems.python import PythonPackage
-
-from spack.package import version, depends_on, license
 
 
 class PySphinxDesign(PythonPackage):
