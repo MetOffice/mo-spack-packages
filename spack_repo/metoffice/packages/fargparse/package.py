@@ -4,8 +4,9 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.packages.fargparse.package import Fargparse as BaseFargparse
 import os
+
+from spack_repo.builtin.packages.fargparse.package import Fargparse as BaseFargparse
 
 
 class Fargparse(BaseFargparse):

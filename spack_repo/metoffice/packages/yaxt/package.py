@@ -5,7 +5,6 @@
 
 
 from spack.package import depends_on, env, filter_file, variant, version
-
 from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
 
 
@@ -101,8 +100,6 @@ class Yaxt(AutotoolsPackage):
                 "tests/ftest_common.f90",
                 backup=True,
             )
-
-        return
 
     def configure_args(self):
         """Add extra configuration flags."""

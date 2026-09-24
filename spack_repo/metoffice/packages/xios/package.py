@@ -4,7 +4,6 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-
 import os
 import textwrap
 
@@ -84,7 +83,7 @@ class Xios(Package):
 
         file = join_path("arch", "arch-SPACK.fcm")
         spec = self.spec
-        param = dict()
+        param = {}
         param["MPICXX"] = spec["mpi"].mpicxx
         param["MPIFC"] = spec["mpi"].mpifc
         param["CC"] = self.compiler.cc
@@ -203,7 +202,7 @@ class Xios(Package):
 
         options = [
             "--full",
-            "--%s" % spec.variants["mode"].value,
+            "--{}".format(spec.variants["mode"].value),
             "--arch",
             "SPACK",
             "--netcdf_lib",

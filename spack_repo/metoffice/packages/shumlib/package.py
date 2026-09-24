@@ -4,8 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.build_systems.cmake import CMakePackage
 from spack.package import depends_on, variant, version
+from spack_repo.builtin.build_systems.cmake import CMakePackage
 
 
 class Shumlib(CMakePackage):

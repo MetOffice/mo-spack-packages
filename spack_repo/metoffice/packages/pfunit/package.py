@@ -4,9 +4,10 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.packages.pfunit.package import Pfunit as BasePfunit
-from spack.package import patch
 import os
+
+from spack.package import patch
+from spack_repo.builtin.packages.pfunit.package import Pfunit as BasePfunit
 
 
 class Pfunit(BasePfunit):
