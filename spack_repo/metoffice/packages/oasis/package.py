@@ -124,7 +124,6 @@ class Oasis(MakefilePackage):
         # to override the superclass build function
         os.symlink(f"{make_dir}/TopMakefileOasis3", f"{make_dir}/Makefile")
 
-
     def install(self, spec, prefix):
         """Install the include files and libraries.
 
@@ -137,7 +136,6 @@ class Oasis(MakefilePackage):
         )
 
         copy_tree(os.path.join(self.arch_directory, "lib"), self.spec.prefix.lib)
-
 
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""

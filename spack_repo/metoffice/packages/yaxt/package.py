@@ -101,7 +101,6 @@ class Yaxt(AutotoolsPackage):
                 backup=True,
             )
 
-
     def configure_args(self):
         """Add extra configuration flags."""
 
