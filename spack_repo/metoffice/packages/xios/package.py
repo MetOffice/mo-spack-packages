@@ -202,7 +202,7 @@ class Xios(Package):
 
         options = [
             "--full",
-            f"--{spec.variants['mode'].value}",
+            "--{}".format(spec.variants["mode"].value),
             "--arch",
             "SPACK",
             "--netcdf_lib",
