@@ -4,7 +4,6 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-
 import os
 import textwrap
 
@@ -203,7 +202,7 @@ class Xios(Package):
 
         options = [
             "--full",
-            "--%s" % spec.variants["mode"].value,
+            f"--{spec.variants['mode'].value}",
             "--arch",
             "SPACK",
             "--netcdf_lib",
