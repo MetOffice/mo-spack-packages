@@ -5,7 +5,6 @@
 # -----------------------------------------------------------------------------
 
 from spack.package import conflicts, depends_on, variant, version
-
 from spack_repo.builtin.build_systems.cmake import CMakePackage
 
 

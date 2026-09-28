@@ -3,9 +3,8 @@
 #  The file LICENCE, distributed with this code, contains details of the terms
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
-from spack.package import depends_on, variant, ver, filter_file
-
 import spack_repo.builtin.packages.blitz.package as BaseBlitz
+from spack.package import depends_on, filter_file, variant, ver
 
 
 class Blitz(BaseBlitz.Blitz):
@@ -36,7 +35,7 @@ class Blitz(BaseBlitz.Blitz):
             # Add a default compiler vendor and set it to llvm if
             # using a recent Cray compiler
             filter_file(
-                "^\)",
+                r"^\)",
                 '[COMPILER_VENDOR="llvm"]\n)',
                 "m4/ac_compiler_specific_header.m4",
             )

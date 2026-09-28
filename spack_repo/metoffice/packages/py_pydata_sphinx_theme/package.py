@@ -5,7 +5,6 @@
 # -----------------------------------------------------------------------------
 
 import spack_repo.builtin.packages.py_pydata_sphinx_theme.package as pyPydataSphinxTheme
-
 from spack.package import version
 
 

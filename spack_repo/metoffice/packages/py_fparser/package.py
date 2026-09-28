@@ -4,8 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.packages.py_fparser.package import PyFparser as PyFparserBase
 from spack.package import version
+from spack_repo.builtin.packages.py_fparser.package import PyFparser as PyFparserBase
 
 
 class PyFparser(PyFparserBase):
