@@ -20,9 +20,9 @@ class PySciFab(PythonPackage):
 
     homepage = "https://github.com/MetOffice/fab"
     pypi = "sci-fab/sci_fab-0.10.1-py3-none-any.whl"
-    
+
     version(
-        "2.3.0", 
+        "2.3.0",
         sha256="ca1badfef6b4a4b5e5641d1bfe7d2a4e2366b5cdc8a43281dc2e4c17fa282c2b",
     )
     version(
