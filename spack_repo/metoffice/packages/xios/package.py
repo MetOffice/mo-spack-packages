@@ -32,6 +32,7 @@ class Xios(Package):
     git = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git"
 
     # XIOS 3
+    version("3.0.4.1", tag="xios-3.0.4.1")
     version("3.0.4.0", tag="xios-3.0.4.0")
     version(
         "3.0.1.0",
