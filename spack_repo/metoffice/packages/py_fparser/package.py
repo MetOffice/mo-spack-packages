@@ -10,7 +10,10 @@ from spack.package import version
 
 class PyFparser(PyFparserBase):
     """Extension of the central Spack fparser package"""
-
+    version(
+        "0.2.5", 
+        sha256="2bfdeb22a241a0455cb9a43d0eaacfae88f05bcc05ab136965c73fe1585a06b0",
+    )
     version(
         "0.2.4",
         sha256="1bdcfd757b739e0435e249a5b2735d672b45c39b3defa6f1065336b69e77ae0f",

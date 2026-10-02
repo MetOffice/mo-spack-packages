@@ -16,7 +16,7 @@ class PyPsyclone(PyPsycloneBase):
     development of kernel-based, Fortran-embedded DSLs and is used in the UK
     Met Office's next-generation modelling system, LFRic.
     """
-
+    version("3.4.0-rc1", tag="v3.4.0-rc1")
     version(
         "3.3.1",
         sha256="9d256cc4ee1494286b1ed8b4b8447b576748008ea5e236159717db1ddc3bd09a",
