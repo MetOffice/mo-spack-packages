@@ -72,8 +72,13 @@ class Shumlib(CMakePackage):
 
         env.prepend_path("FFLAGS", "-I" + self.spec.prefix.include, " ")
         env.prepend_path("CPPFLAGS", "-I" + self.spec.prefix.include, " ")
+
+        if self.spec.satisfies("@:2025.12.1"):
+            libdir = self.spec.prefix.lib
+        else:
+            libdir = self.spec.prefix.lib64
         env.prepend_path(
             "LDFLAGS",
-            "-L" + self.spec.prefix.lib64 + " -Wl,-rpath=" + self.spec.prefix.lib64,
+            "-L" + libdir + " -Wl,-rpath=" + libdir,
             " ",
         )
