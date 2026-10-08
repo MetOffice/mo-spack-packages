@@ -17,6 +17,7 @@ class PyPsyclone(PyPsycloneBase):
     Met Office's next-generation modelling system, LFRic.
     """
 
+    version("3.4.0-rc2", tag="v3.4.0-rc2")
     version("3.4.0-rc1", tag="v3.4.0-rc1")
     version(
         "3.3.1",
