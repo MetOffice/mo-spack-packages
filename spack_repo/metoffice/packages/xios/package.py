@@ -98,7 +98,7 @@ class Xios(Package):
         else:
             param["LIBCXX"] = "-lstdc++"
 
-        if spec.satisfies("%gcc"):
+        if spec.satisfies("%fortran=gcc"):
             # Allow long lines in gfortran
             param["FFLAGS"] = "-ffree-line-length-none"
         else:
