@@ -104,11 +104,11 @@ class Xios(Package):
         else:
             param["FFLAGS"] = ""
 
-        # Note: removed "%intel", "%apple-clang", "%clang", "%fj" from
+        # Note: removed "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
         if any(
-            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi", "%rocmcc"))
         ) and self.spec.satisfies("@=2.2701"):
             text = textwrap.dedent(
                 """
