@@ -17,6 +17,7 @@ from spack.package import (
     install_tree,
     join_path,
     mkdirp,
+    patch,
     run_after,
     touch,
     variant,
@@ -43,6 +44,11 @@ class Xios(Package):
     version(
         "2.2701", commit="2eb572f0986eca19031eb6c294d116646010687c"
     )  # equivalent sha to legacy svn revision 2701
+    patch(
+        "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios/-/commit/8b6a14f2bc20339c771705c105ed309e89ead686.patch",
+        sha256="94176395abf49a24a3e89f9e11165f9f997b47211ca954f7f244a606da703d2c",
+        when="@2.2701",
+    )  # longitude normalisation and type issues fixed in MR !51
 
     variant("oasis", default=False, description="enable OASIS support")
     variant(
@@ -98,17 +104,17 @@ class Xios(Package):
         else:
             param["LIBCXX"] = "-lstdc++"
 
-        if spec.satisfies("%gcc"):
+        if spec.satisfies("%fortran=gcc"):
             # Allow long lines in gfortran
             param["FFLAGS"] = "-ffree-line-length-none"
         else:
             param["FFLAGS"] = ""
 
-        # Note: removed "%intel", "%apple-clang", "%clang", "%fj" from
+        # Note: removed "%apple-clang", "%clang", "%fj" from
         # the list on the assumption that the flags will need changing
         # to work with these compilers
         if any(
-            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi", "%rocmcc"))
         ) and self.spec.satisfies("@=2.2701"):
             text = textwrap.dedent(
                 """

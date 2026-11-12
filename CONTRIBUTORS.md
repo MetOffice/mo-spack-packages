@@ -8,3 +8,4 @@
 | andrewcoughtrie | Andrew Coughtrie | Met Office            | 2026-05-28 |
 | EdHone          | Ed Hone          | Met Office            | 2026-06-12 |
 | james-bruten-mo | James Bruten     | Met Office            | 2026-06-12 |
+| nmnobre         | Nuno Nobre       | STFC Hartree Centre   | 2026-11-11 |
