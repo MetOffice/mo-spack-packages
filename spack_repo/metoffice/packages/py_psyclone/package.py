@@ -4,8 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.packages.py_psyclone.package import PyPsyclone as PyPsycloneBase
 from spack.package import version, depends_on
+from spack_repo.builtin.packages.py_psyclone.package import PyPsyclone as PyPsycloneBase
 
 
 class PyPsyclone(PyPsycloneBase):
@@ -16,8 +16,10 @@ class PyPsyclone(PyPsycloneBase):
     development of kernel-based, Fortran-embedded DSLs and is used in the UK
     Met Office's next-generation modelling system, LFRic.
     """
-
-    version("3.4.0-rc1", tag="v3.4.0-rc1")
+    version(
+        "3.4.0",
+        sha256="7aa4ad8185e9360ffe08d91a5f501608cbf568c00a2e9adf13b5321fcfde8862",
+    )
     version(
         "3.3.1",
         sha256="9d256cc4ee1494286b1ed8b4b8447b576748008ea5e236159717db1ddc3bd09a",
