@@ -93,10 +93,10 @@ class Oasis(MakefilePackage):
             "AR": "ar",
             "ARFLAGS": "-ruv",
             # Compilers are set above
-            "F90": spec["mpi"].mpifc + " -fallow-argument-mismatch",
-            "F": spec["mpi"].mpifc + " -fallow-argument-mismatch",
-            "f90": spec["mpi"].mpifc + " -fallow-argument-mismatch",
-            "f": spec["mpi"].mpifc + " -fallow-argument-mismatch",
+            "F90": spec["mpi"].mpifc,
+            "F": spec["mpi"].mpifc,
+            "f90": spec["mpi"].mpifc,
+            "f": spec["mpi"].mpifc,
             "CC": spec["mpi"].mpicc,
             "LD": spec["mpi"].mpifc,
             # Flags and switches
