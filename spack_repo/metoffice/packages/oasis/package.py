@@ -4,9 +4,9 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
+import glob
 import os
 import shutil
-import glob
 
 from spack.package import copy_tree, depends_on, variant, version
 from spack_repo.builtin.build_systems.makefile import MakefilePackage
