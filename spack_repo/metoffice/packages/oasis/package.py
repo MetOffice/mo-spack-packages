@@ -5,8 +5,9 @@
 # -----------------------------------------------------------------------------
 
 import os
-from spack_repo.builtin.build_systems.makefile import MakefilePackage
+
 from spack.package import copy_tree, depends_on, variant, version
+from spack_repo.builtin.build_systems.makefile import MakefilePackage
 
 
 class Oasis(MakefilePackage):
@@ -123,8 +124,6 @@ class Oasis(MakefilePackage):
         # to override the superclass build function
         os.symlink(f"{make_dir}/TopMakefileOasis3", f"{make_dir}/Makefile")
 
-        return
-
     def install(self, spec, prefix):
         """Install the include files and libraries.
 
@@ -137,8 +136,6 @@ class Oasis(MakefilePackage):
         )
 
         copy_tree(os.path.join(self.arch_directory, "lib"), self.spec.prefix.lib)
-
-        return
 
     def setup_run_environment(self, env):
         """Setup custom variables in the generated module file"""

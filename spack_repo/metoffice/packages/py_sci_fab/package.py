@@ -4,8 +4,8 @@
 #  under which the code may be used.
 # -----------------------------------------------------------------------------
 
-from spack_repo.builtin.build_systems.python import PythonPackage
 from spack.package import depends_on, variant, version
+from spack_repo.builtin.build_systems.python import PythonPackage
 
 
 class PySciFab(PythonPackage):
