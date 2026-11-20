@@ -5,12 +5,15 @@
 # -----------------------------------------------------------------------------
 
 import os
+import re
 import textwrap
 
+import spack.util.web
 from spack.package import (
     Executable,
     InstallError,
     Package,
+    Version,
     depends_on,
     env,
     filter_file,
@@ -19,6 +22,7 @@ from spack.package import (
     mkdirp,
     run_after,
     touch,
+    tty,
     variant,
     version,
 )
@@ -31,13 +35,20 @@ class Xios(Package):
     url = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios/-/archive/xios-3.0.1.0/xios-xios-3.0.1.0.tar.gz"
     git = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios.git"
 
-    # XIOS 3
-    version("3.0.4.1", tag="xios-3.0.4.1")
-    version("3.0.4.0", tag="xios-3.0.4.0")
-    version(
-        "3.0.1.0",
-        sha256="d357e81d9139eb0e7cc15664297851042340ca57a8e84a92b0d0847b8a7c8bfb",
+    # GitLab REST API endpoint for the repository tags.  The tags page in
+    # the GitLab web UI is rendered client-side, so spack's default HTML
+    # scraping cannot find any versions; query the API instead.
+    tags_api_url = (
+        "https://gitlab.in2p3.fr/api/v4/projects/"
+        "ipsl%2Fprojets%2Fxios-projects%2Fxios/repository/tags"
     )
+    tag_regex = re.compile(r"^xios-(\d+(?:\.\d+)+)$")
+
+    # XIOS 3
+    version("3.0.7.2", sha256="26ec3f54587ef2f9536b46650624a7e764d6af13cebe7a06b98b0537ef287e35")
+    version("3.0.4.1", sha256="9ccbad3823951ee149ac7ecb4f50dbcf24b1786946ed6b1bc21f43b49cffa2aa")
+    version("3.0.4.0", sha256="f109c811d4dda7cb54dc110920787e7ce7b143b8101ce27d0777ef1d373c73b3")
+    version("3.0.1.0", sha256="d357e81d9139eb0e7cc15664297851042340ca57a8e84a92b0d0847b8a7c8bfb")
 
     # XIOS 2
     version(
@@ -108,7 +119,7 @@ class Xios(Package):
         # the list on the assumption that the flags will need changing
         # to work with these compilers
         if any(
-            map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
+                map(spec.satisfies, ("%gcc", "%cce", "%intel", "%oneapi"))
         ) and self.spec.satisfies("@=2.2701"):
             text = textwrap.dedent(
                 """
@@ -341,3 +352,41 @@ class Xios(Package):
             " ",
         )
         env.set("XIOS_VERSION", str(self.spec.version))
+
+    def url_for_version(self, version):
+        """Return the GitLab archive URL for a tagged release."""
+        base = "https://gitlab.in2p3.fr/ipsl/projets/xios-projects/xios"
+        return f"{base}/-/archive/xios-{version}/xios-xios-{version}.tar.gz"
+
+    def fetch_remote_versions(self, concurrency=None):
+        """Find remote versions by querying the GitLab tags API.
+
+        Overrides the default implementation, which scrapes HTML pages
+        for links and cannot see tags on GitLab's JavaScript-rendered
+        tags page.
+        """
+        versions = {}
+        per_page = 100
+        page = 1
+        while True:
+            url = f"{self.tags_api_url}?per_page={per_page}&page={page}"
+            try:
+                tags = spack.util.web.read_json(url)
+            except Exception as e:
+                tty.warn(f"Unable to fetch XIOS tags from {url}: {e}")
+                break
+
+            if not isinstance(tags, list) or not tags:
+                break
+
+            for tag in tags:
+                match = self.tag_regex.match(tag.get("name", ""))
+                if match:
+                    ver = Version(match.group(1))
+                    versions[ver] = self.url_for_version(ver)
+
+            if len(tags) < per_page:
+                break
+            page += 1
+
+        return versions
